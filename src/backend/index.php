@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Db.php'; 
+require_once 'createTables.php'; 
 
 function getUserById($userId)
 {
@@ -9,7 +10,7 @@ function getUserById($userId)
 
     $sql = "SELECT * FROM users WHERE id = :id";
     $stmt = $connection->prepare($sql);
-
+createTables($connection);
 echo "Hello world!<br>";
     // Validating the parameter because it is comming from the frontend
     $stmt->bindParam(':id', $userId, PDO::PARAM_INT);
