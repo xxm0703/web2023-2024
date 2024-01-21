@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects Table</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Projects Table</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Created At</th>
+        </tr>
+    </thead>
+    <tbody id="projectsTableBody">
+        <!-- Table rows will be dynamically added here using JavaScript -->
+    </tbody>
+</table>
+
+<script>
+    async function fetchData() {
+        try {
+            const response = await fetch('projects.php');
+            const data = await response.json();
+            console.log(data);
+            return data;
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
+    function populateTable() {
+        const tmp = fetchData()
+        .then(projectsData => {
+        console.log(projectsData);
+        
+        const tableBody = document.getElementById('projectsTableBody');
+
+        projectsData.forEach(project => {
+            const row = document.createElement('tr');
+            row.innerHTML = `<td>${project.id}</td><td>${project.name}</td><td>${project.created_at}</td>`;
+            tableBody.appendChild(row);
+        });
+    });
+    }
+    // Call the function to populate the table on page load
+    window.onload = populateTable;
+</script>
+
+</body>
+</html>
