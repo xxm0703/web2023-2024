@@ -5,7 +5,7 @@ FROM php:7.4-apache
 WORKDIR /var/www/html
 
 # Copy the local code into the container at /var/www/html
-COPY ./ /var/www/html/
+COPY . .
 
 # Enable Apache modules and configurations for rewriting URLs
 RUN a2enmod rewrite
