@@ -1,0 +1,23 @@
+body {
+  max-width: 500px;
+}
+
+#requirements-list {
+  margin-bottom: 20px;
+}
+
+h2 {
+  color: #333;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  background-color: #f9f9f9;
+  margin-bottom: 5px;
+  padding: 10px;
+  border: 1px solid #ddd;
+}

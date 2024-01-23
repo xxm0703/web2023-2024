@@ -1,25 +1,35 @@
 <?php
 
-require_once 'Db.php'; 
-require_once 'createTables.php'; 
+require_once 'Db.php';
+require_once 'routing.php';
+require_once(__DIR__ . '/functionalRequirements/view.php');
+require_once(__DIR__ . '/nonfunctionalRequirements/view.php');
 
-function getUserById($userId)
+class Applicaiton
 {
+  private function addRoutes($router)
+  {
+    $frView = new FunctionalRequirementsView();
+    $router->addRoute('GET', '#^/functionalRequirements/?$#', [$frView, 'fetchAllFunctionalRequirements']);
+    $router->addRoute('GET', '#^/functionalRequirements/(\d+)$#', [$frView, 'fetchFunctionalRequirementById']);
+    $router->addRoute('POST', '#^/functionalRequirements/?$#', [$frView, 'addFunctionalRequirement']);
+    $router->addRoute('DELETE', '#^/functionalRequirements/(\d+)$#', [$frView, 'removeFunctionalRequirement']);
+
+    $nfrView = new NonfunctionalRequirementsView();
+    $router->addRoute('GET', '#^/nonfunctionalRequirements/?$#', [$nfrView, 'fetchAllNonfunctionalRequirements']);
+    $router->addRoute('GET', '#^/nonfunctionalRequirements/(\d+)$#', [$nfrView, 'fetchNonfunctionalRequirementById']);
+    $router->addRoute('POST', '#^/nonfunctionalRequirements/?$#', [$nfrView, 'addNonfunctionalRequirement']);
+    $router->addRoute('DELETE', '#^/nonfunctionalRequirements/(\d+)$#', [$nfrView, 'removeNonfunctionalRequirement']);
+  }
+
+  public function run()
+  {
     $database = new Db();
-    $connection = $database->getConnection();
-
-    $sql = "SELECT * FROM users WHERE id = :id";
-    $stmt = $connection->prepare($sql);
-createTables($connection);
-echo "Hello world!<br>";
-    // Validating the parameter because it is comming from the frontend
-    $stmt->bindParam(':id', $userId, PDO::PARAM_INT);
-
-    $stmt->execute();
-
-    $user = $stmt->fetch();
-
-    return $user !== false ? $user : null;
+    $router = new Router();
+    $this->addRoutes($router);
+    $router->handleRequest();
+  }
 }
-getUserById(2)
-?>
+
+$app = new Applicaiton();
+$app->run();
