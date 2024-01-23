@@ -1,4 +1,5 @@
 import { Http } from './http.js';
+import { displayRequirement } from './requirementList.js';
 
 function onAddRequirement() {
   const name = document.getElementById('requirementName').value;
