@@ -1,0 +1,33 @@
+#loader[hidden] {
+  display: none;
+}
+
+.hidden {
+  display: none;
+}
+
+#login-form {
+  width: 300px;
+  border: 2px solid #84e0e2;
+  border-radius: 5px;
+  background-color: #d6f3f4;
+  padding: 10px;
+  margin: 0 auto;
+}
+
+#login-form input {
+  width: 295px;
+  margin-bottom: 10px;
+}
+
+#login-form input:last-child {
+  margin-bottom: 0px;
+}
+
+#login-form input[type='submit'] {
+  width: 302px;
+}
+
+.input-error {
+  border: solid 1px red;
+}

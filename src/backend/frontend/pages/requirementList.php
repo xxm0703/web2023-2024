@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['email'])) {
+  header('Location: /frontend/pages/login.php');
+  exit;
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>

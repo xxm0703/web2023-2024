@@ -20,7 +20,7 @@ function fetchRequirements(type) {
     .catch((error) => console.error('Error:', error));
 }
 
-export function displayRequirement(requirement) {
+function displayRequirement(requirement) {
   const requirementsList = document.getElementById('requirements-list');
 
   const box = document.createElement('li');

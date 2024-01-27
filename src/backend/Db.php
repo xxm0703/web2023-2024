@@ -22,7 +22,6 @@ class Db
         ]
       );
 
-      $this->createTables($this->connection);
     } catch (PDOException $e) {
       echo "Error: " . $e->getMessage();
     }
@@ -37,14 +36,25 @@ class Db
     }
   }
 
-  private function createTables($pdo)
+  public function createTables()
   {
+    $pdo = $this->connection;
     $tables = array(
+      "users" => "
+      CREATE TABLE users (
+        id INTEGER PRIMARY KEY AUTO_INCREMENT,
+        email VARCHAR(255) NOT NULL UNIQUE,
+        password TEXT NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP()
+      );
+      ",
       "projects" => "
       CREATE TABLE projects (
         id INTEGER PRIMARY KEY AUTO_INCREMENT,
         name VARCHAR(255) NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP()
+        user_id INTEGER NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
       );
       ",
       "requirements" => "

@@ -1,5 +1,4 @@
 import { Http } from './http.js';
-import { displayRequirement } from './requirementList.js';
 
 function onAddRequirement() {
   const name = document.getElementById('requirementName').value;
@@ -20,9 +19,7 @@ function onAddRequirement() {
   const http = new Http();
   http
     .post(endPoint, { body })
-    .then((data) => {
-      displayRequirement(data);
-
+    .then((_) => {
       document.getElementById('requirementName').value = '';
       document.getElementById('requirementDescription').value = '';
       document.getElementById('requirementProjectId').value = undefined;
@@ -32,7 +29,3 @@ function onAddRequirement() {
     })
     .catch((error) => console.error('Error:', error));
 }
-
-document
-  .getElementById('add-req-button')
-  .addEventListener('click', onAddRequirement);
