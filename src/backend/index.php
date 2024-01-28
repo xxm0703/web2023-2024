@@ -5,6 +5,7 @@ require_once 'routing.php';
 require_once(__DIR__ . '/functionalRequirements/view.php');
 require_once(__DIR__ . '/nonfunctionalRequirements/view.php');
 require_once(__DIR__ . '/users/view.php');
+require_once(__DIR__ . '/projects/view.php');
 
 class Applicaiton
 {
@@ -23,10 +24,13 @@ class Applicaiton
     $router->addRoute('DELETE', '#^/nonfunctionalRequirements/(\d+)$#', [$nfrView, 'removeNonfunctionalRequirement'], true);
 
     $userView = new UsersView();
-    $router->addRoute('GET', '#^/session/?$#', [$userView,'checkLoginStatus']);
+    $router->addRoute('GET', '#^/session/?$#', [$userView, 'checkLoginStatus']);
     $router->addRoute('POST', '#^/login/?$#', [$userView, 'login']);
     $router->addRoute('POST', '#^/register/?$#', [$userView, 'register']);
     $router->addRoute('DELETE', '#^/logout/?$#', [$userView, 'logout'], true);
+
+    $projectsView = new ProjetsView();
+    $router->addRoute('GET', '#^/projects/wbs/(\d+)$#', [$projectsView, 'exportWBS'], true);
   }
 
   public function run()

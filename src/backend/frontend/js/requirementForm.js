@@ -20,12 +20,16 @@ function onAddRequirement() {
   http
     .post(endPoint, { body })
     .then((_) => {
-      document.getElementById('requirementName').value = '';
-      document.getElementById('requirementDescription').value = '';
+      document.getElementById('requirementName').value = undefined;
+      document.getElementById('requirementDescription').value = undefined;
       document.getElementById('requirementProjectId').value = undefined;
-      document.getElementById('requirementUnit').value = '';
-      document.getElementById('requirementValue').value = '';
+      document.getElementById('requirementUnit').value = undefined;
+      document.getElementById('requirementValue').value = undefined;
       document.getElementById('requirementType').value = 'functional';
     })
     .catch((error) => console.error('Error:', error));
 }
+
+document
+  .getElementById('requirement-form')
+  .addEventListener('submit', onAddRequirement);

@@ -74,6 +74,7 @@ class UsersController
 
     if ($loginSuccessful) {
       $_SESSION['email'] = $data['email'];
+      $_SESSION['userId'] = $user['id'];
     }
 
     return $loginSuccessful;

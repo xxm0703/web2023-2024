@@ -21,7 +21,7 @@ function fetchRequirements(type) {
 }
 
 function displayRequirement(requirement) {
-  const requirementsList = document.getElementById('requirements-list');
+  const requirementList = document.getElementById('requirement-list');
 
   const box = document.createElement('li');
   box.id = `box-requirement-${requirement.id}`;
@@ -38,7 +38,7 @@ function displayRequirement(requirement) {
 
   box.appendChild(requirementElement);
   box.appendChild(deleteButton);
-  requirementsList.appendChild(box);
+  requirementList.appendChild(box);
 }
 
 function deleteRequirement(requirement) {

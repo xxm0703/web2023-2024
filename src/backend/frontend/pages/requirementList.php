@@ -19,6 +19,6 @@ if (!isset($_SESSION['email'])) {
   </head>
   <body>
     <h2>Requirements list</h2>
-    <ul id="requirements-list"></ul>
+    <ul id="requirement-list"></ul>
   </body>
 </html>

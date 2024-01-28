@@ -31,6 +31,9 @@ if (!isset($_SESSION['email'])) {
       <li>
         <a href="/frontend/pages/requirementList.php">Requirements List</a>
       </li>
+      <li>
+        <a href="/frontend/pages/wbs.php">WBS export</a>
+      </li>
     </ul>
   </section>
 </body>
