@@ -6,14 +6,18 @@ class ProjectWithFunctionalRequirements
   public $requirementName;
   public $requirementDescription;
 
+  public $priority;
+
   public function __construct(
     string $projectName,
     string $requirementName,
-    ?string $requirementDescription
+    ?string $requirementDescription,
+    int $priority
   ) {
     $this->projectName = $projectName;
     $this->requirementName = $requirementName;
     $this->requirementDescription = $requirementDescription;
+    $this->priority = $priority;
   }
 
   public static function fromAssoc(array $arrayData)
@@ -21,7 +25,8 @@ class ProjectWithFunctionalRequirements
     return new ProjectWithFunctionalRequirements(
       $arrayData['project_name'],
       $arrayData['requirement_name'],
-      $arrayData['description']
+      $arrayData['description'],
+      $arrayData['priority'],
     );
   }
 }
@@ -33,12 +38,13 @@ class ProjectWithNonFunctionalRequirements
   public $requirementDescription;
   public $unit;
   public $value;
-
+  public $priority;
 
   public function __construct(
     string $projectName,
     string $requirementName,
     ?string $requirementDescription,
+    int $priority,
     string $unit,
     string $value
 
@@ -46,6 +52,7 @@ class ProjectWithNonFunctionalRequirements
     $this->projectName = $projectName;
     $this->requirementName = $requirementName;
     $this->requirementDescription = $requirementDescription;
+    $this->priority = $priority;
     $this->unit = $unit;
     $this->value = $value;
   }
@@ -56,6 +63,7 @@ class ProjectWithNonFunctionalRequirements
       $arrayData['project_name'],
       $arrayData['requirement_name'],
       $arrayData['description'],
+      $arrayData['priority'],
       $arrayData['unit'],
       $arrayData['value']
     );

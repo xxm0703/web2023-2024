@@ -62,6 +62,7 @@ class Db
         id INTEGER PRIMARY KEY AUTO_INCREMENT,
         name VARCHAR(255) NOT NULL,
         description VARCHAR(255),
+        priority INTEGER CHECK (priority >= 1 and priority <= 5),
         project_id INTEGER NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
         FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE

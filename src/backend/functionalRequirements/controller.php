@@ -18,7 +18,7 @@ class FunctionalRequirementsController
       $connection = $this->db->getConnection();
 
       $select = $connection->prepare(
-        'SELECT `r`.`id`, `r`.`name`, `r`.`description` , `r`.`project_id`, `r`.`created_at`
+        'SELECT `r`.`id`, `r`.`name`, `r`.`description`, `r`.`priority`, `r`.`project_id`, `r`.`created_at`
         from `requirements` `r`
         join `functional_requirements` `fr` on `fr`.`requirement_id` = `r`.`id`; '
       );
@@ -43,14 +43,14 @@ class FunctionalRequirementsController
       $connection = $this->db->getConnection();
 
       $select = $connection->prepare(
-        'SELECT `r`.`id`, `r`.`name`, `r`.`description`, `r`.`project_id`, `r`.`created_at` 
+        'SELECT `r`.`id`, `r`.`name`, `r`.`description`, `r`.`priority`, `r`.`project_id`, `r`.`created_at` 
         from `requirements` `r`
         join `functional_requirements` `fr` on `fr`.`requirement_id` = `r`.`id`
         where `r`.`id` = ?'
       );
       $select->execute([$id]);
       $requirement = $select->fetch();
-      
+
       if ($requirement === false) {
         return null;
       }
@@ -67,12 +67,13 @@ class FunctionalRequirementsController
       $connection = $this->db->getConnection();
 
       $insert = $connection->prepare(
-        'INSERT INTO `requirements` (`name`, `description`, `project_id`) VALUES (:name, :description, :projectId)'
+        'INSERT INTO `requirements` (`name`, `description`, `priority`, `project_id`) VALUES (:name, :description, :priority, :projectId)'
       );
 
       $result = $insert->execute([
         'name' => $data['name'],
         'description' => $data['description'],
+        'priority' => $data['priority'],
         'projectId' => $data['projectId']
       ]);
 

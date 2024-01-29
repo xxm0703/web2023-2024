@@ -33,6 +33,7 @@ class ProjectsController
       if ($pfr->requirementDescription !== null) {
         $wbsString .= '**** ' . $pfr->requirementDescription . "\n";
       }
+      $wbsString .= '**** ' . "Priority: " . $pfr->priority . "\n";
     }
 
     $wbsString .= '** Non Functional Requirements' . "\n";
@@ -41,6 +42,7 @@ class ProjectsController
       if ($pnfr->requirementDescription !== null) {
         $wbsString .= '**** ' . $pnfr->requirementDescription . "\n";
       }
+      $wbsString .= '**** ' . "Priority: " . $pnfr->priority . "\n";
 
       $wbsString .= '**** ' . "Measured with " . $pnfr->unit . "\n";
       $wbsString .= '**** ' . "Value: " . $pnfr->value . "\n";
@@ -56,11 +58,12 @@ class ProjectsController
       $connection = $this->db->getConnection();
 
       $select = $connection->prepare(
-        'SELECT `p`.`name` as project_name, `r`.`name` as requirement_name, `r`.`description`
+        'SELECT `p`.`name` as project_name, `r`.`name` as requirement_name, `r`.`description`, `r`.`priority`
         FROM `projects` `p` 
         left join `requirements` `r` on `r`.`project_id` = `p`.`id`
         join `functional_requirements` `fr` on `fr`.`requirement_id` = `r`.`id`
-        WHERE `p`.`id` = :projectId and `p`.`user_id` = :userId'
+        WHERE `p`.`id` = :projectId and `p`.`user_id` = :userId
+        ORDER BY `r`.`priority` DESC'
       );
       $select->execute([
         'projectId' => $projectId,
@@ -85,11 +88,12 @@ class ProjectsController
       $connection = $this->db->getConnection();
 
       $select = $connection->prepare(
-        'SELECT `p`.`name` as project_name, `r`.`name` as requirement_name, `r`.`description`, `nfr`.`unit`, `nfr`.`value`
+        'SELECT `p`.`name` as project_name, `r`.`name` as requirement_name, `r`.`description`, `r`.`priority`, `nfr`.`unit`, `nfr`.`value`
         FROM `projects` `p` 
         left join `requirements` `r` on `r`.`project_id` = `p`.`id`
         join `nonfunctional_requirements` `nfr` on `nfr`.`requirement_id` = `r`.`id`
-        WHERE `p`.`id` = :projectId and `p`.`user_id` = :userId'
+        WHERE `p`.`id` = :projectId and `p`.`user_id` = :userId
+        ORDER BY `r`.`priority` DESC'
       );
       $select->execute([
         'projectId' => $projectId,

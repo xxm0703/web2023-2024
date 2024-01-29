@@ -25,6 +25,7 @@ if (!isset($_SESSION['email'])) {
     <label for="requirementTitle">Title:</label>
     <input type="text" id="requirementName" placeholder="Enter requirement name" />
     <input type="text" id="requirementDescription" placeholder="Enter requirement description" />
+    <input type="number" id="requirementPriority" placeholder="Enter priority (1-5)" min="1" max="5" />
     <input type="number" id="requirementProjectId" placeholder="Enter project id" />
     <input type="text" id="requirementUnit" placeholder="Enter requirement unit" />
     <input type="text" id="requirementValue" placeholder="Enter requirement value" />
