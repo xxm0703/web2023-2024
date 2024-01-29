@@ -15,12 +15,13 @@ if (!isset($_SESSION['email'])) {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="../styles/dashboard.css" />
-  <script type="module" src="../js/logout.js" defer></script>
+  <script type="module" src="../js/navbar.js" defer></script>
   <title>Dashboard</title>
 </head>
 
 <body>
   <header>
+    <input type="button" value="Dashboard" id="dashboard-button" />
     <input type="button" value="Log out" id="logout-button" />
   </header>
   <section id="app">

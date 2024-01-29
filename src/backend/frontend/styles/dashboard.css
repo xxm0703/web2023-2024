@@ -1,13 +1,49 @@
 body {
-  font-family: Arial, sans-serif;
-  margin: auto;
-  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
 }
 
-#app {
-  background-color: #fff;
-  border: 1px solid #ccc;
-  padding: 20px;
-  width: fit-content;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  text-align: right;
+}
+
+#logout-button, #dashboard-button {
+  background-color: #c62828;
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+#logout-button:hover, #dashboard-button:hover {
+  background-color: #b71c1c;
+}
+
+section {
+  margin: 20px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 10px;
+}
+
+a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+a:hover {
+  text-decoration: underline;
 }

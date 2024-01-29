@@ -7,7 +7,7 @@ body {
   height: 100vh;
 }
 
-#login-form {
+#register-form {
   background-color: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
@@ -16,7 +16,7 @@ body {
   text-align: center;
 }
 
-#login-form input {
+#register-form input {
   width: 100%;
   padding: 10px;
   margin: 8px 0;
@@ -25,7 +25,7 @@ body {
   border-radius: 4px;
 }
 
-#login-form button {
+#register-form button {
   background-color: #4caf50;
   color: #fff;
   padding: 10px 20px;
@@ -35,18 +35,6 @@ body {
   font-size: 16px;
 }
 
-#login-form button:hover {
+#register-form button:hover {
   background-color: #45a049;
-}
-
-a {
-  display: block;
-  text-align: center;
-  margin-top: 10px;
-  color: #333;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
 }

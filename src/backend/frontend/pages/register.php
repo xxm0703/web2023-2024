@@ -8,18 +8,17 @@ session_start();
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login</title>
-  <link href="../styles/login.css" rel="stylesheet" />
-  <script type="module" src="../js/login.js" defer></script>
+  <title>Register</title>
+  <link href="../styles/register.css" rel="stylesheet" />
+  <script type="module" src="../js/register.js" defer></script>
 </head>
 
 <body>
-  <form id="login-form">
+  <form id="register-form">
     <input id="email" type="email" name="email" placeholder="Email" />
     <input id="password" type="password" name="password" placeholder="Password" />
-    <button type="submit">Log in</button>
+    <button type="submit">Register</button>
   </form>
-  <a href="/frontend/pages/register.php">Don't have an account? Click here to register</a>
 </body>
 
 </html>

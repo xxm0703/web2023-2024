@@ -10,7 +10,7 @@ const onPageLoad = () => {
   });
 };
 
-function onLoginFormSubmit(event) {
+function onRegisterFormSubmit(event) {
   event.preventDefault();
 
   const email = document.getElementById('email').value;
@@ -18,14 +18,14 @@ function onLoginFormSubmit(event) {
   const http = new Http();
 
   http
-    .post('/login', {
+    .post('/register', {
       body: { email, password },
     })
     .then((result) => {
       if (result) {
-        onPageLoad();
+        window.location.href = '/frontend/pages/login.php';
       } else {
-        alert('Invalid credentials');
+        alert('Something went wrong');
       }
     });
 }
@@ -33,5 +33,5 @@ function onLoginFormSubmit(event) {
 onPageLoad();
 
 document
-  .getElementById('login-form')
-  .addEventListener('submit', onLoginFormSubmit);
+  .getElementById('register-form')
+  .addEventListener('submit', onRegisterFormSubmit);

@@ -25,6 +25,7 @@ function displayRequirement(requirement) {
 
   const box = document.createElement('li');
   box.id = `box-requirement-${requirement.id}`;
+  box.className = 'requirement-item';
   box.style.display = 'flex';
   box.style.gap = '4px';
 
@@ -34,6 +35,7 @@ function displayRequirement(requirement) {
 
   const deleteButton = document.createElement('button');
   deleteButton.innerHTML = 'Delete';
+  deleteButton.className = 'delete-button';
   deleteButton.onclick = () => deleteRequirement(requirement);
 
   box.appendChild(requirementElement);
