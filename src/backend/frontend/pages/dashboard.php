@@ -33,7 +33,7 @@ if (!isset($_SESSION['email'])) {
         <a href="/frontend/pages/requirementList.php">Requirements List</a>
       </li>
       <li>
-        <a href="/frontend/pages/wbs.php">WBS export</a>
+        <a href="/frontend/pages/export.php">Export requirements</a>
       </li>
     </ul>
   </section>

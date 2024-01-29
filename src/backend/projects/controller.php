@@ -14,7 +14,17 @@ class ProjectsController
     $this->db = new Db();
   }
 
+  public function exportMindMap($projectId)
+  {
+    return $this->generateString($projectId, '@startmindmap', '@endmindmap');
+  }
+
   public function exportWBS($projectId)
+  {
+    return $this->generateString($projectId, '@startwbs', '@endwbs');
+  }
+
+  private function generateString($projectId, $start, $end)
   {
     $projectWithFunctionalRequirements = $this->fetchFunctionalRequirements($projectId);
     $projectWithNonFunctionalRequirements = $this->fetchNonFunctionalRequirements($projectId);
@@ -25,31 +35,45 @@ class ProjectsController
 
     $projectName = $projectWithFunctionalRequirements[0]->projectName;
 
-    $wbsString = '@startwbs' . "\n";
-    $wbsString .= '* ' . $projectName . "\n";
-    $wbsString .= '** Functional Requirements' . "\n";
+    $result = $start . "\n";
+    $result .= '* ' . $projectName . "\n";
+    $result .= '** Functional Requirements' . "\n";
     foreach ($projectWithFunctionalRequirements as $pfr) {
-      $wbsString .= '*** ' . $pfr->requirementName . "\n";
+      $result .= '*** ' . $pfr->requirementName . "\n";
       if ($pfr->requirementDescription !== null) {
-        $wbsString .= '**** ' . $pfr->requirementDescription . "\n";
+        $result .= '**** ' . $pfr->requirementDescription . "\n";
       }
-      $wbsString .= '**** ' . "Priority: " . $pfr->priority . "\n";
+      $result .= '**** ' . "Priority: " . $pfr->priority . "\n";
     }
 
-    $wbsString .= '** Non Functional Requirements' . "\n";
+    $symb = '*';
+    if ($start === '@startmindmap') {
+      $symb = '-';
+    }
+
+    $result .= $this->genSymbol($symb, 2) . 'Non Functional Requirements' . "\n";
     foreach ($projectWithNonFunctionalRequirements as $pnfr) {
-      $wbsString .= '*** ' . $pnfr->requirementName . "\n";
+      $result .= $this->genSymbol($symb, 3) . $pnfr->requirementName . "\n";
       if ($pnfr->requirementDescription !== null) {
-        $wbsString .= '**** ' . $pnfr->requirementDescription . "\n";
+        $result .= $this->genSymbol($symb, 4) . $pnfr->requirementDescription . "\n";
       }
-      $wbsString .= '**** ' . "Priority: " . $pnfr->priority . "\n";
+      $result .= $this->genSymbol($symb, 4) . "Priority: " . $pnfr->priority . "\n";
 
-      $wbsString .= '**** ' . "Measured with " . $pnfr->unit . "\n";
-      $wbsString .= '**** ' . "Value: " . $pnfr->value . "\n";
+      $result .= $this->genSymbol($symb, 4) . "Measurement: " . $pnfr->unit . "\n";
+      $result .= $this->genSymbol($symb, 4) . "Value: " . $pnfr->value . "\n";
     }
 
-    $wbsString .= '@endwbs';
-    return $wbsString;
+    $result .= $end;
+    return $result;
+  }
+
+  private function genSymbol($symb, $times) {
+    $result = "";
+    for ($i = 0; $i < $times; $i++) {
+      $result .= $symb;  
+    }
+    $result .= ' ';
+    return $result;
   }
 
   private function fetchFunctionalRequirements($projectId): array

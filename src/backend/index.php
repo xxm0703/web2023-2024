@@ -31,6 +31,7 @@ class Applicaiton
 
     $projectsView = new ProjetsView();
     $router->addRoute('GET', '#^/projects/wbs/(\d+)$#', [$projectsView, 'exportWBS'], true);
+    $router->addRoute('GET', '#^/projects/mindmap/(\d+)$#', [$projectsView, 'exportMindMap'], true);
   }
 
   public function run()

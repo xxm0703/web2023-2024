@@ -28,10 +28,10 @@ if (!isset($_SESSION['email'])) {
   <section>
     <h2>Add New Requirement</h2>
     <form id="requirement-form">
-      <input class="input" type="text" id="requirementName" placeholder="Enter requirement name" />
+      <input required class="input" type="text" id="requirementName" placeholder="Enter requirement name" />
       <input class="input" type="text" id="requirementDescription" placeholder="Enter requirement description" />
-      <input class="input" type="number" id="requirementPriority" placeholder="Enter priority (1-5)" min="1" max="5" />
-      <input class="input" type="number" id="requirementProjectId" placeholder="Enter project id" />
+      <input required class="input" type="number" id="requirementPriority" placeholder="Enter priority (1-5)" min="1" max="5" />
+      <input required class="input" type="number" id="requirementProjectId" placeholder="Enter project id" />
       <input class="input" type="text" id="requirementUnit" placeholder="Enter requirement unit" />
       <input class="input" type="text" id="requirementValue" placeholder="Enter requirement value" />
       <label for="requirementType">Requirement type:</label>
