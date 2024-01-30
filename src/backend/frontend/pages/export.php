@@ -32,6 +32,7 @@ if (!isset($_SESSION['email'])) {
       <select id="export-type">
         <option value="wbs">Work Breakdown Structure (WBS)</option>
         <option value="mindmap">MindMap</option>
+        <option value="gantt">Gantt Chart</option>
       </select>
       <button id="export-button" type="submit">Export</button>
     </form>

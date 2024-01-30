@@ -6,6 +6,7 @@ class FunctionalRequirement implements JsonSerializable
   private $name;
   private $description;
   private $priority;
+  private $estimate;
   private $projectId;
   private $createdAt;
 
@@ -14,6 +15,7 @@ class FunctionalRequirement implements JsonSerializable
     string $name,
     ?string $description,
     int $priority,
+    int $estimate,
     int $projectId,
     string $createdAt
   ) {
@@ -21,6 +23,7 @@ class FunctionalRequirement implements JsonSerializable
     $this->name = $name;
     $this->description = $description;
     $this->priority = $priority;
+    $this->estimate = $estimate;
     $this->projectId = $projectId;
     $this->createdAt = $createdAt;
   }
@@ -32,6 +35,7 @@ class FunctionalRequirement implements JsonSerializable
       $arrayData['name'],
       $arrayData['description'],
       $arrayData['priority'],
+      $arrayData['estimate'],
       $arrayData['project_id'],
       $arrayData['created_at']
     );
@@ -44,6 +48,7 @@ class FunctionalRequirement implements JsonSerializable
       'name' => $this->name,
       'description' => $this->description,
       'priority'=> $this->priority,
+      'estimate'=> $this->estimate,
       'projectId' => $this->projectId,      
       'createdAt' => $this->createdAt
     ];

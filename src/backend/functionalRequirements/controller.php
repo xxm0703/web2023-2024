@@ -18,7 +18,7 @@ class FunctionalRequirementsController
       $connection = $this->db->getConnection();
 
       $select = $connection->prepare(
-        'SELECT `r`.`id`, `r`.`name`, `r`.`description`, `r`.`priority`, `r`.`project_id`, `r`.`created_at`
+        'SELECT `r`.`id`, `r`.`name`, `r`.`description`, `r`.`priority`, `fr`.`estimate`, `r`.`project_id`, `r`.`created_at`
         from `requirements` `r`
         join `functional_requirements` `fr` on `fr`.`requirement_id` = `r`.`id`; '
       );
@@ -43,7 +43,7 @@ class FunctionalRequirementsController
       $connection = $this->db->getConnection();
 
       $select = $connection->prepare(
-        'SELECT `r`.`id`, `r`.`name`, `r`.`description`, `r`.`priority`, `r`.`project_id`, `r`.`created_at` 
+        'SELECT `r`.`id`, `r`.`name`, `r`.`description`, `r`.`priority`, `fr`.`estimate`, `r`.`project_id`, `r`.`created_at` 
         from `requirements` `r`
         join `functional_requirements` `fr` on `fr`.`requirement_id` = `r`.`id`
         where `r`.`id` = ?'
@@ -79,9 +79,12 @@ class FunctionalRequirementsController
 
       $id = $connection->lastInsertId();
       $functionalRequirementsInsert = $connection->prepare(
-        'INSERT INTO `functional_requirements` (`requirement_id`) VALUES (?)'
+        'INSERT INTO `functional_requirements` (`requirement_id`, `estimate`) VALUES (:id, :estimate)'
       );
-      $functionalRequirementsInsert->execute([$id]);
+      $functionalRequirementsInsert->execute([
+        'id' => $id,
+        'estimate' => $data['estimate']
+      ]);
 
       if (!$result) {
         throw new Exception('Error executing INSERT statement');

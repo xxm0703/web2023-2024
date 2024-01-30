@@ -30,4 +30,14 @@ class ProjetsView
     $result = $this->controller->exportMindMap($id);
     echo json_encode($result, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
   }
+
+  public function exportGantt($id)
+  {
+    if (!is_numeric($id)) {
+      echo "Invalid id";
+      return;
+    }
+    $result = $this->controller->exportGantt($id);
+    echo json_encode($result, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+  }
 }

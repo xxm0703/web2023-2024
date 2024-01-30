@@ -52,6 +52,7 @@ class Db
       CREATE TABLE projects (
         id INTEGER PRIMARY KEY AUTO_INCREMENT,
         name VARCHAR(255) NOT NULL,
+        start_date DATE NOT NULL,
         user_id INTEGER NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
         FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
@@ -72,6 +73,7 @@ class Db
       CREATE TABLE functional_requirements (
         id INTEGER PRIMARY KEY AUTO_INCREMENT,
         requirement_id INTEGER NOT NULL,
+        estimate INTEGER NOT NULL,
         FOREIGN KEY (requirement_id) REFERENCES requirements(id) ON DELETE CASCADE
       );
       ",

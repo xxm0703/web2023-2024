@@ -6,6 +6,7 @@ function onAddRequirement() {
   const description = descriptionValue === '' ? null : descriptionValue
   const priority = document.getElementById('requirementPriority').value;
   const projectId = document.getElementById('requirementProjectId').value;
+  const estimate = document.getElementById('requirementEstimate').value;
   const unit = document.getElementById('requirementUnit').value;
   const value = document.getElementById('requirementValue').value;
   const type = document.getElementById('requirementType').value;
@@ -16,6 +17,8 @@ function onAddRequirement() {
   if (type === 'nonfunctional') {
     endPoint = 'nonfunctionalRequirements/';
     body = { ...body, unit, value };
+  } else {
+    body = { ...body, estimate };
   }
 
   const http = new Http();
@@ -24,8 +27,9 @@ function onAddRequirement() {
     .then((_) => {
       document.getElementById('requirementName').value = undefined;
       document.getElementById('requirementDescription').value = undefined;
-      document.getElementById('requirementPriority').value = "1";
+      document.getElementById('requirementPriority').value = '1';
       document.getElementById('requirementProjectId').value = undefined;
+      document.getElementById('requirementEstimate').value = undefined;
       document.getElementById('requirementUnit').value = undefined;
       document.getElementById('requirementValue').value = undefined;
       document.getElementById('requirementType').value = type;

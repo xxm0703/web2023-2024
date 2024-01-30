@@ -24,6 +24,30 @@ class ProjectsController
     return $this->generateString($projectId, '@startwbs', '@endwbs');
   }
 
+  public function exportGantt($projectId)
+  {
+    $projectWithFunctionalRequirements = $this->fetchFunctionalRequirements($projectId);
+
+    if (empty($projectWithFunctionalRequirements)) {
+      return "";
+    }
+
+    $projectName = $projectWithFunctionalRequirements[0]->projectName;
+    $startDate = $projectWithFunctionalRequirements[0]->startDate;
+
+    $ganttString = "@startgantt\n";
+    $ganttString .= "Project starts the " . $startDate . "\n";
+    $ganttString .= "printscale weekly\n";
+    $ganttString .= "--" . $projectName . "--\n";
+
+    foreach ($projectWithFunctionalRequirements as $pfr) {
+      $ganttString .= '[' . $pfr->requirementName . "] requires " . $pfr->estimate . " days\n";
+    }
+
+    $ganttString .= "@endgantt\n";
+    return $ganttString;
+  }
+
   private function generateString($projectId, $start, $end)
   {
     $projectWithFunctionalRequirements = $this->fetchFunctionalRequirements($projectId);
@@ -44,6 +68,7 @@ class ProjectsController
         $result .= '**** ' . $pfr->requirementDescription . "\n";
       }
       $result .= '**** ' . "Priority: " . $pfr->priority . "\n";
+      $result .= '**** ' . "Estimate: " . $pfr->estimate . " days\n";
     }
 
     $symb = '*';
@@ -67,10 +92,11 @@ class ProjectsController
     return $result;
   }
 
-  private function genSymbol($symb, $times) {
+  private function genSymbol($symb, $times)
+  {
     $result = "";
     for ($i = 0; $i < $times; $i++) {
-      $result .= $symb;  
+      $result .= $symb;
     }
     $result .= ' ';
     return $result;
@@ -82,7 +108,7 @@ class ProjectsController
       $connection = $this->db->getConnection();
 
       $select = $connection->prepare(
-        'SELECT `p`.`name` as project_name, `r`.`name` as requirement_name, `r`.`description`, `r`.`priority`
+        'SELECT `p`.`name` as project_name, `p`.`start_date`, `r`.`name` as requirement_name, `r`.`description`, `r`.`priority`, `fr`.`estimate`
         FROM `projects` `p` 
         left join `requirements` `r` on `r`.`project_id` = `p`.`id`
         join `functional_requirements` `fr` on `fr`.`requirement_id` = `r`.`id`
@@ -135,5 +161,4 @@ class ProjectsController
       return [];
     }
   }
-
 }
