@@ -64,8 +64,9 @@ class NonfunctionalRequirementsController
 
   public function addNonfunctionalRequirement($data): bool
   {
+    $connection = $this->db->getConnection();
     try {
-      $connection = $this->db->getConnection();
+      $connection->beginTransaction();
 
       $insert = $connection->prepare(
         'INSERT INTO `requirements` (`name`, `description`, `priority`, `project_id`) VALUES (:name, :description, :priority, :projectId)'
@@ -78,23 +79,26 @@ class NonfunctionalRequirementsController
       ]);
 
       $id = $connection->lastInsertId();
-      $functionalRequirementsInsert = $connection->prepare(
+      $nonfunctionalRequirementsInsert = $connection->prepare(
         'INSERT INTO `nonfunctional_requirements` (`unit`, `value`,`requirement_id`) 
         VALUES (:unit, :value, :requirementId)'
       );
-      $functionalRequirementsInsert->execute([
+      $secondInsertResult = $nonfunctionalRequirementsInsert->execute([
         'unit' => $data['unit'],
         'value' => $data['value'],
         'requirementId' => $id,
       ]);
 
-      if (!$result) {
+      if (!$result || !$secondInsertResult ) {
         throw new Exception('Error executing INSERT statement');
       }
+      $connection->commit();
 
       return true;
     } catch (Exception $e) {
       echo "Error: " . $e->getMessage();
+      $connection->rollback();
+
       return false;
     }
   }

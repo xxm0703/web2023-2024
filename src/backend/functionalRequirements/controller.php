@@ -63,8 +63,9 @@ class FunctionalRequirementsController
 
   public function addFunctionalRequirement($data): bool
   {
+    $connection = $this->db->getConnection();
     try {
-      $connection = $this->db->getConnection();
+      $connection->beginTransaction();
 
       $insert = $connection->prepare(
         'INSERT INTO `requirements` (`name`, `description`, `priority`, `project_id`) VALUES (:name, :description, :priority, :projectId)'
@@ -81,18 +82,21 @@ class FunctionalRequirementsController
       $functionalRequirementsInsert = $connection->prepare(
         'INSERT INTO `functional_requirements` (`requirement_id`, `estimate`) VALUES (:id, :estimate)'
       );
-      $functionalRequirementsInsert->execute([
+      $secondInsertResult = $functionalRequirementsInsert->execute([
         'id' => $id,
         'estimate' => $data['estimate']
       ]);
 
-      if (!$result) {
+      if (!$result || !$secondInsertResult) {
         throw new Exception('Error executing INSERT statement');
       }
+      $connection->commit();
 
       return true;
     } catch (Exception $e) {
       echo "Error: " . $e->getMessage();
+      $connection->rollback();
+
       return false;
     }
   }
