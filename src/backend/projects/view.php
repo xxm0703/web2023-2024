@@ -2,7 +2,7 @@
 
 require_once 'controller.php';
 
-class ProjetsView
+class ProjectsView
 {
   private $controller;
 
