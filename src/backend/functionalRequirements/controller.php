@@ -37,6 +37,39 @@ class FunctionalRequirementsController
     }
   }
 
+  public function fetchFunctionalRequirementsForProject($projectId)
+  {
+    try {
+      $isAuthorized = $this->isProjectOwnedByUser($projectId);
+      if (!$isAuthorized) {
+        echo "Not authorized";
+        return [];
+      }
+
+      $connection = $this->db->getConnection();
+
+      $select = $connection->prepare(
+        'SELECT `r`.`id`, `r`.`name`, `r`.`description`, `r`.`priority`, `fr`.`estimate`, `r`.`project_id`, `r`.`created_at`
+        from `requirements` `r`
+        join `functional_requirements` `fr` on `fr`.`requirement_id` = `r`.`id`
+        where `r`.`project_id` = ?
+        order by `r`.`created_at` DESC'
+      );
+      $select->execute([$projectId]);
+      $rows = $select->fetchAll();
+
+      $requirements = [];
+      foreach ($rows as $row) {
+        $requirements[] = FunctionalRequirement::fromAssoc($row);
+      }
+
+      return $requirements;
+    } catch (Exception $e) {
+      echo "" . $e->getMessage();
+      return [];
+    }
+  }
+
   public function fetchFunctionalRequirementById($id): ?FunctionalRequirement
   {
     try {
@@ -64,6 +97,11 @@ class FunctionalRequirementsController
   public function addFunctionalRequirement($data): bool
   {
     $connection = $this->db->getConnection();
+    $isAuthorized = $this->isProjectOwnedByUser($data['projectId']);
+    if (!$isAuthorized) {
+      return false;
+    }
+
     try {
       $connection->beginTransaction();
 
@@ -103,7 +141,14 @@ class FunctionalRequirementsController
 
   public function removeFunctionalRequirementById($id): bool
   {
+    $requirement = $this->fetchFunctionalRequirementById($id);
+    $isAuthorized = $this->isProjectOwnedByUser($requirement->projectId);
+    if (!$isAuthorized) {
+      return false;
+    }
+
     try {
+
       $connection = $this->db->getConnection();
 
       $delete = $connection->prepare('DELETE from `requirements` `r` where `r`.`id` = ?');
@@ -116,4 +161,31 @@ class FunctionalRequirementsController
     }
   }
 
+  private function isProjectOwnedByUser($projectId): bool
+  {
+    try {
+      $connection = $this->db->getConnection();
+      $userId = $_SESSION['userId'];
+
+      $select = $connection->prepare(
+        'SELECT *
+        from `projects` `p` 
+        where `p`.`user_id` = :userId and `p`.`id` = :projectId'
+      );
+      $select->execute([
+        'userId' => $userId,
+        'projectId' => $projectId
+      ]);
+      $project = $select->fetch();
+
+      if ($project === false) {
+        return false;
+      }
+
+      return true;
+    } catch (Exception $e) {
+      echo "" . $e->getMessage();
+      return false;
+    }
+  }
 }

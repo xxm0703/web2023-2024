@@ -13,7 +13,13 @@ class FunctionalRequirementsView
 
   public function fetchAllFunctionalRequirements()
   {
-    $requirements = $this->controller->fetchAllFunctionalRequirements();
+    $requirements = [];
+    if (isset($_GET['projectId'])) {
+      $projectId = $_GET['projectId'];
+      $requirements = $this->controller->fetchFunctionalRequirementsForProject($projectId);
+    } else {
+      $requirements = $this->controller->fetchAllFunctionalRequirements();
+    }
     echo json_encode($requirements, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
   }
 
@@ -37,7 +43,7 @@ class FunctionalRequirementsView
   public function removeFunctionalRequirement($id)
   {
     if (!is_numeric($id)) {
-      echo "Invalid id"; 
+      echo "Invalid id";
       return;
     }
     $result = $this->controller->removeFunctionalRequirementById($id);

@@ -12,13 +12,13 @@ class Applicaiton
   private function addRoutes($router)
   {
     $frView = new FunctionalRequirementsView();
-    $router->addRoute('GET', '#^/functionalRequirements/?$#', [$frView, 'fetchAllFunctionalRequirements'], true);
+    $router->addRoute('GET', '#^/functionalRequirements(?:/\?.*)?$#', [$frView, 'fetchAllFunctionalRequirements'], true);
     $router->addRoute('GET', '#^/functionalRequirements/(\d+)$#', [$frView, 'fetchFunctionalRequirementById'], true);
     $router->addRoute('POST', '#^/functionalRequirements/?$#', [$frView, 'addFunctionalRequirement'], true);
     $router->addRoute('DELETE', '#^/functionalRequirements/(\d+)$#', [$frView, 'removeFunctionalRequirement'], true);
 
     $nfrView = new NonfunctionalRequirementsView();
-    $router->addRoute('GET', '#^/nonfunctionalRequirements/?$#', [$nfrView, 'fetchAllNonfunctionalRequirements'], true);
+    $router->addRoute('GET', '#^/nonfunctionalRequirements(?:/\?.*)?$#', [$nfrView, 'fetchAllNonfunctionalRequirements'], true);
     $router->addRoute('GET', '#^/nonfunctionalRequirements/(\d+)$#', [$nfrView, 'fetchNonfunctionalRequirementById'], true);
     $router->addRoute('POST', '#^/nonfunctionalRequirements/?$#', [$nfrView, 'addNonfunctionalRequirement'], true);
     $router->addRoute('DELETE', '#^/nonfunctionalRequirements/(\d+)$#', [$nfrView, 'removeNonfunctionalRequirement'], true);

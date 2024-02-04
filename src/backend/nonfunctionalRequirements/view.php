@@ -13,7 +13,13 @@ class NonfunctionalRequirementsView
 
   public function fetchAllNonfunctionalRequirements()
   {
-    $requirements = $this->controller->fetchAllNonfunctionalRequirements();
+    $requirements = [];
+    if (isset($_GET['projectId'])) {
+      $projectId = $_GET['projectId'];
+      $requirements = $this->controller->fetchAllNonfunctionalRequirementsForProject($projectId);
+    } else {
+      $requirements = $this->controller->fetchAllNonfunctionalRequirements();
+    }
     echo json_encode($requirements, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
   }
 
@@ -34,7 +40,7 @@ class NonfunctionalRequirementsView
     echo json_encode($result, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
   }
 
-  public function removeNonunctionalRequirement($id)
+  public function removeNonfunctionalRequirement($id)
   {
     if (!is_numeric($id)) {
       echo "Invalid id";

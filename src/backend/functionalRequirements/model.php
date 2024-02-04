@@ -2,13 +2,13 @@
 
 class FunctionalRequirement implements JsonSerializable
 {
-  private $id;
-  private $name;
-  private $description;
-  private $priority;
-  private $estimate;
-  private $projectId;
-  private $createdAt;
+  public $id;
+  public $name;
+  public $description;
+  public $priority;
+  public $estimate;
+  public $projectId;
+  public $createdAt;
 
   public function __construct(
     int $id,
@@ -50,7 +50,6 @@ class FunctionalRequirement implements JsonSerializable
       'priority'=> $this->priority,
       'estimate'=> $this->estimate,
       'projectId' => $this->projectId,      
-      'createdAt' => $this->createdAt
     ];
   }
 }

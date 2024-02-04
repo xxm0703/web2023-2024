@@ -28,13 +28,28 @@ if (!isset($_SESSION['email'])) {
   <section>
     <h2>Add New Requirement</h2>
     <form id="requirement-form">
+      <label for="requirementName">Requirement Name:</label>
       <input required class="input" type="text" id="requirementName" placeholder="Enter requirement name" />
+
+      <label for="requirementDescription">Requirement Description:</label>
       <input class="input" type="text" id="requirementDescription" placeholder="Enter requirement description" />
-      <input required class="input" type="number" id="requirementPriority" placeholder="Enter priority (1-5)" min="1" max="5" />
+
+      <label for="requirementPriority">Requirement Priority (1-5):</label>
+      <input required class="input" type="number" id="requirementPriority" placeholder="Enter priority (1-5)" min="1"
+        max="5" />
+
+      <label for="requirementProjectId">Project ID:</label>
       <input required class="input" type="number" id="requirementProjectId" placeholder="Enter project id" />
+
+      <label id="requirementEstimateLabel" for="requirementEstimate">Requirement Estimate (in days):</label>
       <input class="input" type="text" id="requirementEstimate" placeholder="Enter requirement estimate in days" />
+
+      <label id="requirementUnitLabel" for="requirementUnit">Requirement Unit:</label>
       <input class="input" type="text" id="requirementUnit" placeholder="Enter requirement unit" />
+
+      <label id="requirementValueLabel" for="requirementValue">Requirement Value:</label>
       <input class="input" type="text" id="requirementValue" placeholder="Enter requirement value" />
+
       <label for="requirementType">Requirement type:</label>
       <select id="requirementType">
         <option value="functional">Functional</option>

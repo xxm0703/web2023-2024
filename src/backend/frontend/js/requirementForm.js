@@ -1,8 +1,27 @@
 import { Http } from './http.js';
 
-function onPageLoad() {
+function showFunctionalRequirementInputs() {
   document.getElementById('requirementUnit').classList.add('hidden');
   document.getElementById('requirementValue').classList.add('hidden');
+  document.getElementById('requirementUnitLabel').classList.add('hidden');
+  document.getElementById('requirementValueLabel').classList.add('hidden');
+
+  document.getElementById('requirementEstimate').classList.remove('hidden');
+  document.getElementById('requirementEstimateLabel').classList.remove('hidden');
+}
+
+function showNonFunctionalRequirementInputs() {
+  document.getElementById('requirementEstimate').classList.add('hidden');
+  document.getElementById('requirementEstimateLabel').classList.add('hidden');
+
+  document.getElementById('requirementUnit').classList.remove('hidden');
+  document.getElementById('requirementValue').classList.remove('hidden');
+  document.getElementById('requirementUnitLabel').classList.remove('hidden');
+  document.getElementById('requirementValueLabel').classList.remove('hidden');
+}
+
+function onPageLoad() {
+  showFunctionalRequirementInputs();
 }
 
 function nullIfEmpty(string) {
@@ -54,13 +73,9 @@ function onAddRequirement(e) {
 
 function onRequirementTypeChange(event) {
   if (event.target.value === 'functional') {
-    document.getElementById('requirementUnit').classList.add('hidden');
-    document.getElementById('requirementValue').classList.add('hidden');
-    document.getElementById('requirementEstimate').classList.remove('hidden');
+    showFunctionalRequirementInputs();
   } else {
-    document.getElementById('requirementUnit').classList.remove('hidden');
-    document.getElementById('requirementValue').classList.remove('hidden');
-    document.getElementById('requirementEstimate').classList.add('hidden');
+    showNonFunctionalRequirementInputs();
   }
 }
 

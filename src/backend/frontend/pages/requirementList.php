@@ -27,6 +27,20 @@ if (!isset($_SESSION['email'])) {
   </header>
   <section>
     <h2>Requirements list</h2>
+    <form id="requirement-form">
+      <label for="projectId">Project ID:</label>
+      <input required class="input" type="number" id="projectId" placeholder="Enter project id" />
+      <button id="load-req-button" type=submit>Load Requirements</button>
+    </form>
+    <label id="filters-label" for="filter-checkboxes">Filter by:</label>
+    <div id="filter-checkboxes">
+      <label>
+        <input type="checkbox" id="func-checkbox" checked /> Functional
+      </label>
+      <label>
+        <input type="checkbox" id="non-func-checkbox" checked /> Non functional
+      </label>
+    </div>
     <ul id="requirement-list"></ul>
   </section>
 </body>

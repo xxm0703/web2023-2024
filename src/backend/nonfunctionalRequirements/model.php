@@ -2,14 +2,14 @@
 
 class NonfunctionalRequirement implements JsonSerializable
 {
-  private $id;
-  private $name;
-  private $description;
-  private $priority;
-  private $projectId;
-  private $unit;
-  private $value;
-  private $createdAt;
+  public $id;
+  public $name;
+  public $description;
+  public $priority;
+  public $projectId;
+  public $unit;
+  public $value;
+  public $createdAt;
 
   public function __construct(
     int $id,
@@ -55,7 +55,6 @@ class NonfunctionalRequirement implements JsonSerializable
       'projectId'=> $this->projectId,
       'unit' => $this->unit,
       'value' => $this->value,
-      'createdAt' => $this->createdAt
     ];
   }
 }
