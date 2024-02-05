@@ -85,22 +85,6 @@ class Db
         requirement_id INTEGER NOT NULL,
         FOREIGN KEY (requirement_id) REFERENCES requirements(id) ON DELETE CASCADE
       );
-      ",
-      "hash_tags" => "
-      CREATE TABLE hash_tags (
-        id INTEGER PRIMARY KEY AUTO_INCREMENT,
-        name VARCHAR(255) UNIQUE NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP()
-      );
-      ",
-      "hash_tags_requirements" => "
-      CREATE TABLE hash_tags_requirements (
-        id INTEGER PRIMARY KEY AUTO_INCREMENT,
-        hash_tag_id INTEGER NOT NULL,
-        requirement_id INTEGER NOT NULL,
-        FOREIGN KEY (hash_tag_id) REFERENCES hash_tags(id) ON DELETE CASCADE,
-        FOREIGN KEY (requirement_id) REFERENCES requirements(id) ON DELETE CASCADE
-      );
       "
     );
 

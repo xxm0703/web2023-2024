@@ -27,6 +27,9 @@ if (!isset($_SESSION['email'])) {
   <section id="app">
     <ul>
       <li>
+        <a href="/frontend/pages/projectsForm.php">Add Project</a>
+      </li>
+      <li>
         <a href="/frontend/pages/requirementForm.php">Add Requirement</a>
       </li>
       <li>

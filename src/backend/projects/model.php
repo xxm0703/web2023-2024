@@ -81,20 +81,20 @@ class Project implements JsonSerializable
 {
   private $id;
   private $name;
-  private $date;
+  private $start_date;
   private $userId;
   private $createdAt;
 
   public function __construct(
     int $id,
     string $name,
-    string $date,
+    string $start_date,
     string $userId,
     string $createdAt
   ) {
     $this->id = $id;
     $this->name = $name;
-    $this->date = $date;
+    $this->start_date = $start_date;
     $this->userId = $userId;
     $this->createdAt = $createdAt;
   }
@@ -104,7 +104,7 @@ class Project implements JsonSerializable
     return new Project(
       $arrayData["id"],
       $arrayData['name'],
-      $arrayData['date'],
+      $arrayData['start_date'],
       $arrayData['user_id'],
       $arrayData['created_at']
     );
@@ -115,7 +115,7 @@ class Project implements JsonSerializable
     return [
       'id' => $this->id,
       'name' => $this->name,
-      'date'=> $this->date,
+      'start_date'=> $this->start_date,
       'userId' => $this->userId,
       'createdAt' => $this->createdAt
     ];

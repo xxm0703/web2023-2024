@@ -1,0 +1,210 @@
+body {
+  background-color: #f5f5f5;
+  margin: 0;
+}
+
+section {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: '8px';
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+}
+
+#logout-button,
+#dashboard-button {
+  background-color: #c62828;
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+#logout-button:hover,
+#dashboard-button:hover {
+  background-color: #b71c1c;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+}
+
+#requirement-list {
+  list-style: none;
+  padding: 0;
+}
+
+.requirement-item {
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.requirement-item div {
+  flex-grow: 1;
+}
+
+.delete-button {
+  background-color: #c62828;
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 4px;
+  margin-left: 10px;
+}
+
+.delete-button:hover {
+  background-color: #b71c1c;
+}
+
+#requirement-form {
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 8px;
+  width: 300px;
+  text-align: center;
+  max-width: fit-content;
+  align-self: center;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+  color: #333;
+}
+
+#filter-checkboxes {
+  display: flex;
+  gap: 4px;
+  align-self: center;
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#load-req-button {
+  background-color: #4caf50;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#load-req-button:hover {
+  background-color: #45a049;
+}
+
+.hidden {
+  display: none;
+}
+
+#filters-label {
+  align-self: center;
+}
+
+section {
+  background-color: #f5f5f5;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+}
+
+#logout-button, #dashboard-button {
+  background-color: #c62828;
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+#logout-button:hover, #dashboard-button:hover {
+  background-color: #b71c1c;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+}
+
+#requirement-form {
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 8px;
+  width: 300px;
+  text-align: center;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+  color: #333;
+}
+
+.input,
+select {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+select {
+  margin-bottom: 20px;
+}
+
+#add-req-button {
+  background-color: #4caf50;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#add-req-button:hover {
+  background-color: #45a049;
+}
+
+.hidden {
+  display: none;
+}

@@ -29,7 +29,11 @@ class Applicaiton
     $router->addRoute('POST', '#^/register/?$#', [$userView, 'register']);
     $router->addRoute('DELETE', '#^/logout/?$#', [$userView, 'logout'], true);
 
-    $projectsView = new ProjetsView();
+    $projectsView = new ProjectsView();
+    $router->addRoute('GET', '#^/projects/?$#', [$projectsView, 'fetchAllProjects'], true);
+    $router->addRoute('GET', '#^/projects/(\d+)$#', [$projectsView, 'fetchProjectById'], true);
+    $router->addRoute('POST', '#^/projects/?$#', [$projectsView, 'addProject'], true);
+    $router->addRoute('DELETE', '#^/projects/(\d+)$#', [$projectsView, 'removeProject'], true);
     $router->addRoute('GET', '#^/projects/wbs/(\d+)$#', [$projectsView, 'exportWBS'], true);
     $router->addRoute('GET', '#^/projects/mindmap/(\d+)$#', [$projectsView, 'exportMindMap'], true);
     $router->addRoute('GET', '#^/projects/gantt/(\d+)$#', [$projectsView, 'exportGantt'], true);

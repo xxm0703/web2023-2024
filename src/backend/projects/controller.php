@@ -161,4 +161,109 @@ class ProjectsController
       return [];
     }
   }
+  public function fetchAllProjects(): array
+  {
+    try {
+      $connection = $this->db->getConnection();
+
+      $select = $connection->prepare(
+        'SELECT `p`.`id`, `p`.`name`, `p`.`start_date`, `p`.`user_id`, `p`.`created_at`
+        from `projects` `p`;'
+      );
+      $select->execute([]);
+      $rows = $select->fetchAll();
+
+      $projects = [];
+      foreach ($rows as $row) {
+        $projects[] = Project::fromAssoc($row);
+      }
+
+      return $projects;
+    } catch (Exception $e) {
+      echo "" . $e->getMessage();
+      return [];
+    }
+  }
+
+  public function fetchProjectById($id): ?Project
+  {
+    try {
+      $connection = $this->db->getConnection();
+
+      $select = $connection->prepare(
+        'SELECT `p`.`id`, `p`.`name`, `p`.`start_date`, `p`.`user_id`, `p`.`created_at`
+        from `projects` `p`
+        where `p`.`id` = ?'
+      );
+      $select->execute([$id]);
+      $project = $select->fetch();
+
+      if ($project === false) {
+        return null;
+      }
+
+      return Project::fromAssoc($project);
+    } catch (Exception $e) {
+      echo "" . $e->getMessage();
+    }
+  }
+
+  public function addProject($data): bool
+  {
+    $connection = $this->db->getConnection();
+    $userId = $_SESSION['userId'];
+    if (!$userId) {
+      return false;
+    }
+
+    try {
+      $connection->beginTransaction();
+
+      $insert = $connection->prepare(
+        'INSERT INTO `projects` (`name`, `start_date`, `user_id`) VALUES (:name, :start_date, :user_id)'
+      );
+
+      $result = $insert->execute([
+        'name' => $data['name'],
+        'start_date' => $data['startDate'],
+        'user_id' => $userId
+      ]);
+
+      if (!$result) {
+        throw new Exception('Error executing INSERT statement');
+      }
+      $connection->commit();
+
+      return true;
+    } catch (Exception $e) {
+      echo "Error: " . $e->getMessage();
+      $connection->rollback();
+
+      return false;
+    }
+  }
+
+  public function removeProjectById($id): bool
+  {
+    $project = $this->fetchProjectById($id);
+    $userId = $_SESSION['userId'];
+    $isAuthorized = $project->user_id === $userId;
+
+    if (!$isAuthorized) {
+      return false;
+    }
+
+    try {
+
+      $connection = $this->db->getConnection();
+
+      $delete = $connection->prepare('DELETE from `projects` `r` where `r`.`id` = ?');
+      $delete->execute([$id]);
+
+      return true;
+    } catch (Exception $e) {
+      echo "Error: " . $e->getMessage();
+      return false;
+    }
+  } 
 }
