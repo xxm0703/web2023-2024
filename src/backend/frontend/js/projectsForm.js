@@ -47,9 +47,11 @@ function displayProject(project) {
 function deleteProject(project) {
   const http = new Http();
   const endPoint = `projects/${project.id}`;
-  http.delete(endPoint).catch((error) => console.error('Error:', error));
+  http.delete(endPoint).then((resp) => {
+    if (resp)
+      document.getElementById(`box-project-${project.id}`).remove();
+  }).catch((error) => console.error('Error:', error));
 
-  document.getElementById(`box-project-${project.id}`).remove();
 }
 
 function onAddProject(e) {
@@ -63,7 +65,6 @@ function onAddProject(e) {
     name,
     startDate
   };
-console.log(body);
   const http = new Http();
   http
     .post(endPoint, { body })
@@ -75,8 +76,30 @@ console.log(body);
     .catch((error) => console.error('Error:', error));
 }
 
-fetchProjects();
+function importProjects(event) {
+  event.preventDefault();
+  var file = event.target.files[0];
+  var reader = new FileReader();
 
+  reader.onload = function(e) {
+    let endPoint = 'projects/import/';
+    var body = JSON.parse(e.target.result);
+    console.log(body);
+    console.log(e.target.result);
+    const http = new Http();
+    http
+      .post(endPoint, { body })
+      .then((_) => {
+        fetchProjects();
+      })
+      .catch((error) => console.error('Error:', error));
+  };
+
+  reader.readAsText(file);
+}
+
+fetchProjects();
+document.getElementById('jsonFile').addEventListener('change', importProjects);
 document
   .getElementById('projects-form')
   .addEventListener('submit', onAddProject);

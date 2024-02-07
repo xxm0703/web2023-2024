@@ -35,8 +35,14 @@ if (!isset($_SESSION['email'])) {
 
       <button type="submit">Create Project</button>
     </form>
+    </section>
+    <section>
+    <form id="importProjects">
+      <label for="jsonFile">Import JSON File:</label>
+      <input type="file" id="jsonFile" accept=".json">
+    </form>
   </section>
-
+  <br>
   <section>
     <h2>Projects list</h2>
     <ul id="projects-list"></ul>

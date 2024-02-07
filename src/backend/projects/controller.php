@@ -165,12 +165,13 @@ class ProjectsController
   {
     try {
       $connection = $this->db->getConnection();
-
+      $userId = $_SESSION['userId'];
       $select = $connection->prepare(
         'SELECT `p`.`id`, `p`.`name`, `p`.`start_date`, `p`.`user_id`, `p`.`created_at`
-        from `projects` `p`;'
+        from `projects` `p`
+        where `p`.`user_id` = ?'
       );
-      $select->execute([]);
+      $select->execute([$userId]);
       $rows = $select->fetchAll();
 
       $projects = [];
@@ -185,7 +186,7 @@ class ProjectsController
     }
   }
 
-  public function fetchProjectById($id): ?Project
+  private function fetchProjectById($id): ?Project
   {
     try {
       $connection = $this->db->getConnection();
@@ -216,6 +217,136 @@ class ProjectsController
       return false;
     }
 
+    return $this->insertProject($data) != -1;
+  }
+  public function importProjects($data)
+  {
+    $userId = $_SESSION['userId'];    
+    if (!$userId) {
+      return false;
+    }
+    $isInserted = true;
+    foreach ($data as $project) {
+      $projectId = $this->insertProject($project);
+      if ($isInserted) {
+        $this->insertFunctional($project['functional'], $projectId);
+        $this->insertNonfunctional($project['nonfunctional'], $projectId);
+      }
+    }
+    return $isInserted;
+  }
+  public function removeProjectById($id) : bool
+  {
+    $project = $this->fetchProjectById($id);
+    $userId = $_SESSION['userId'];
+    $isAuthorized = $project->getOwnerId() == $userId;
+
+    if (!$isAuthorized) {
+      return false;
+    }
+
+    try {
+
+      $connection = $this->db->getConnection();
+
+      $delete = $connection->prepare('DELETE from `projects` `p` where `p`.`id` = ?');
+      $delete->execute([$id]);
+
+      return true;
+    } catch (Exception $e) {
+      echo "Error: " . $e->getMessage();
+      return false;
+    }
+  } 
+
+  private function insertNonfunctional($data, $projectId) : bool {
+    $connection = $this->db->getConnection();
+    foreach ($data as $requirement) {
+      try {
+        $connection->beginTransaction();
+  
+        $insert = $connection->prepare(
+          'INSERT INTO `requirements` (`name`, `description`, `priority`, `project_id`) VALUES (:name, :description, :priority, :projectId)'
+        );
+        $result = $insert->execute([
+          'name' => $requirement['name'],
+          'description' => $requirement['description'],
+          'priority' => $requirement['priority'],
+          'projectId' => $projectId
+        ]);
+  
+        $id = $connection->lastInsertId();
+        $nonfunctionalRequirementsInsert = $connection->prepare(
+          'INSERT INTO `nonfunctional_requirements` (`unit`, `value`,`requirement_id`) 
+          VALUES (:unit, :value, :requirementId)'
+        );
+        $secondInsertResult = $nonfunctionalRequirementsInsert->execute([
+          'unit' => $requirement['unit'],
+          'value' => $requirement['value'],
+          'requirementId' => $id,
+        ]);
+  
+        if (!$result || !$secondInsertResult) {
+          throw new Exception('Error executing INSERT statement');
+        }
+        $connection->commit();
+  
+      } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
+        $connection->rollback();
+  
+        return false;
+      }
+    }
+    return true;
+  }
+
+
+  private function insertFunctional($data, $projectId) : bool {
+    $connection = $this->db->getConnection();
+    foreach ($data as $requirement) {
+      try {
+        $connection->beginTransaction();
+  
+        $insert = $connection->prepare(
+          'INSERT INTO `requirements` (`name`, `description`, `priority`, `project_id`) VALUES (:name, :description, :priority, :projectId)'
+        );
+        $result = $insert->execute([
+          'name' => $requirement['name'],
+          'description' => $requirement['description'],
+          'priority' => $requirement['priority'],
+          'projectId' => $projectId
+        ]);
+  
+        $id = $connection->lastInsertId();
+        $functionalRequirementsInsert = $connection->prepare(
+          'INSERT INTO `functional_requirements` (`requirement_id`, `estimate`) VALUES (:id, :estimate)'
+        );
+        $secondInsertResult = $functionalRequirementsInsert->execute([
+          'id' => $id,
+          'estimate' => $requirement['estimate']
+        ]);
+  
+        if (!$result || !$secondInsertResult) {
+          throw new Exception('Error executing INSERT statement');
+        }
+        $connection->commit();
+  
+      } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
+        $connection->rollback();
+  
+        return false;
+      }
+    }
+    return true;
+
+  }
+
+  private function insertProject($data): int {
+    $userId = $_SESSION['userId'];
+    $connection = $this->db->getConnection();
+
     try {
       $connection->beginTransaction();
 
@@ -228,42 +359,19 @@ class ProjectsController
         'start_date' => $data['startDate'],
         'user_id' => $userId
       ]);
+      $id = $connection->lastInsertId();
 
       if (!$result) {
         throw new Exception('Error executing INSERT statement');
       }
       $connection->commit();
 
-      return true;
+      return $id;      ;
     } catch (Exception $e) {
       echo "Error: " . $e->getMessage();
       $connection->rollback();
 
-      return false;
+      return -1;
     }
   }
-
-  public function removeProjectById($id): bool
-  {
-    $project = $this->fetchProjectById($id);
-    $userId = $_SESSION['userId'];
-    $isAuthorized = $project->user_id === $userId;
-
-    if (!$isAuthorized) {
-      return false;
-    }
-
-    try {
-
-      $connection = $this->db->getConnection();
-
-      $delete = $connection->prepare('DELETE from `projects` `r` where `r`.`id` = ?');
-      $delete->execute([$id]);
-
-      return true;
-    } catch (Exception $e) {
-      echo "Error: " . $e->getMessage();
-      return false;
-    }
-  } 
 }

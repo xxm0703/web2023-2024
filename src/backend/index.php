@@ -33,6 +33,7 @@ class Applicaiton
     $router->addRoute('GET', '#^/projects/?$#', [$projectsView, 'fetchAllProjects'], true);
     $router->addRoute('GET', '#^/projects/(\d+)$#', [$projectsView, 'fetchProjectById'], true);
     $router->addRoute('POST', '#^/projects/?$#', [$projectsView, 'addProject'], true);
+    $router->addRoute('POST', '#^/projects/import/?$#', [$projectsView, 'importProjects'], true);
     $router->addRoute('DELETE', '#^/projects/(\d+)$#', [$projectsView, 'removeProject'], true);
     $router->addRoute('GET', '#^/projects/wbs/(\d+)$#', [$projectsView, 'exportWBS'], true);
     $router->addRoute('GET', '#^/projects/mindmap/(\d+)$#', [$projectsView, 'exportMindMap'], true);

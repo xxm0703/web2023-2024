@@ -73,4 +73,11 @@ class ProjectsView
     $result = $this->controller->removeProjectById($id);
     echo json_encode($result, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
   }
+
+  public function importProjects()
+  {
+    $postData = json_decode(file_get_contents("php://input"), true);
+    $result = $this->controller->importProjects($postData);
+    echo json_encode($result, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+  }
 }

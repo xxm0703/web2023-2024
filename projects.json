@@ -1,0 +1,6 @@
+[{
+"name": "project42",
+"startDate": "2012-12-12",
+"functional": [],
+"nonfunctional": [{"name": "metric", "description" : "ddz", "priority": 5, "unit":"s", "value" : "3"}]
+}]

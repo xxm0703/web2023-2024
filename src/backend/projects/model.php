@@ -99,6 +99,10 @@ class Project implements JsonSerializable
     $this->createdAt = $createdAt;
   }
 
+  public function getOwnerId(): int {
+    return $this->userId;
+  }
+
   public static function fromAssoc(array $arrayData)
   {
     return new Project(
