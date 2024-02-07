@@ -1,6 +1,110 @@
-[{
-"name": "project420",
-"startDate": "2013-12-12",
-"functional": [{"name": "feature", "description" : "ddz22","priority": 2, "estimate" : 3}],
-"nonfunctional": [{"name": "metric", "description" : "ddz", "priority": 5, "unit":"s", "value" : "3"}]
-}]
+[
+  {
+    "name": "E-commerce Platform Redesign",
+    "startDate": "2023-02-15",
+    "functional": [
+      {
+        "name": "User Registration",
+        "description": "Allow users to register new accounts",
+        "priority": 1,
+        "estimate": 5
+      },
+      {
+        "name": "Product Search",
+        "description": "Enable users to search for products",
+        "priority": 2,
+        "estimate": 8
+      },
+      {
+        "name": "Shopping Cart",
+        "description": "Implement shopping cart functionality",
+        "priority": 3,
+        "estimate": 10
+      }
+    ],
+    "nonfunctional": [
+      {
+        "name": "Security",
+        "description": "Implement TLS encryption for secure connections",
+        "priority": 1,
+        "unit": "",
+        "value": "Enabled"
+      },
+      {
+        "name": "Performance",
+        "description": "Ensure page load time is under 3 seconds",
+        "priority": 2,
+        "unit": "s",
+        "value": "3"
+      }
+    ]
+  },
+  {
+    "name": "Mobile Banking App Development",
+    "startDate": "2024-01-10",
+    "functional": [
+      {
+        "name": "Account Balance Check",
+        "description": "Allow users to check their account balances",
+        "priority": 1,
+        "estimate": 5
+      },
+      {
+        "name": "Fund Transfer",
+        "description": "Enable users to transfer funds between accounts",
+        "priority": 2,
+        "estimate": 8
+      }
+    ],
+    "nonfunctional": [
+      {
+        "name": "Security",
+        "description": "Implement biometric authentication for logins",
+        "priority": 1,
+        "unit": "",
+        "value": "Enabled"
+      },
+      {
+        "name": "Offline Capability",
+        "description": "Allow limited functionality when offline",
+        "priority": 2,
+        "unit": "",
+        "value": "Enabled"
+      }
+    ]
+  },
+  {
+    "name": "Online Learning Platform",
+    "startDate": "2023-09-22",
+    "functional": [
+      {
+        "name": "Course Enrollment",
+        "description": "Enable students to enroll in courses",
+        "priority": 1,
+        "estimate": 6
+      },
+      {
+        "name": "Video Lectures",
+        "description": "Provide video lectures for enrolled courses",
+        "priority": 2,
+        "estimate": 9
+      }
+    ],
+    "nonfunctional": [
+      {
+        "name": "Accessibility",
+        "description": "Ensure platform is accessible to users with disabilities",
+        "priority": 1,
+        "unit": "",
+        "value": "Compliant with WCAG standards"
+      },
+      {
+        "name": "Scalability",
+        "description": "Support increasing number of concurrent users",
+        "priority": 2,
+        "unit": "",
+        "value": "Able to handle 10,000 concurrent users"
+      }
+    ]
+  }
+]
