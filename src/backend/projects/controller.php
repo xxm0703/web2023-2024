@@ -225,15 +225,12 @@ class ProjectsController
     if (!$userId) {
       return false;
     }
-    $isInserted = true;
     foreach ($data as $project) {
       $projectId = $this->insertProject($project);
-      if ($isInserted) {
-        $this->insertFunctional($project['functional'], $projectId);
-        $this->insertNonfunctional($project['nonfunctional'], $projectId);
-      }
+      $this->insertFunctional($project['functional'], $projectId);
+      $this->insertNonfunctional($project['nonfunctional'], $projectId);
     }
-    return $isInserted;
+    return true;
   }
   public function removeProjectById($id) : bool
   {
